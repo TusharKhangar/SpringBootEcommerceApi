@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/E-Commernce-Project-Backend.iml" filepath="$PROJECT_DIR$/.idea/E-Commernce-Project-Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecom-backend/ecom-backend.iml" filepath="$PROJECT_DIR$/ecom-backend/ecom-backend.iml" />
+    </modules>
+  </component>
+</project>

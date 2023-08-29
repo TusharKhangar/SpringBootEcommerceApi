@@ -1,7 +1,6 @@
 package com.ecom.payload;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 
 import com.ecom.Model.Cart;
 import com.ecom.Model.Product;

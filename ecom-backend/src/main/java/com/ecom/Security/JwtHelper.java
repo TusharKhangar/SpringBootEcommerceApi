@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +16,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtHelper {
 	public static final long JWT_TOKEN_VALIDIY= 5 *60 *60;
-	private String secret="jwtTokenKey";
-	
+
+	@Value("${ecom.app.jwtSecret}")
+	private String secret;
+
+	@Value("${ecom.app.jwtExpirationMs}")
+	private int jwtExpirationMs;
+
 	//retrive username from jwt token
 	
 	public String getUsername(String token){
@@ -30,7 +36,7 @@ public class JwtHelper {
 	
 	//  check token has expire
 	private boolean isTokenExpired(String token) {
-	 final	Date date=getExpireationDateFromToken(token);
+	 final	Date date= getExpireationDateFromToken(token);
 	 return date.before(new Date());
 	}
 	
@@ -46,7 +52,7 @@ public class JwtHelper {
 
 			return Jwts.builder().setClaims(claims).setSubject(subject)
 					.setIssuedAt(new Date(System.currentTimeMillis()))
-					.setExpiration(new Date(System.currentTimeMillis()+JWT_TOKEN_VALIDIY * 1000))
+					.setExpiration(new Date(System.currentTimeMillis()+jwtExpirationMs))
 					.signWith(SignatureAlgorithm.HS512,secret).compact();
 		}
 		

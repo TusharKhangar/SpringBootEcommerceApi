@@ -45,8 +45,8 @@ private	UserRepository userRepo;
         	
        	//here we are checking product stock 
         if(!product.isStock()){
-        	
-        	new ResourceNotFoundException("Product Out of Stock");
+
+			throw new ResourceNotFoundException("Product Out of Stock");
         }
         
         // create cartItem with productId and Qnt

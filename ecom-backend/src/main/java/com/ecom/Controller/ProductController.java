@@ -1,40 +1,53 @@
 package com.ecom.Controller;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.constraints.AssertFalse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.ecom.Model.Product;
+import com.ecom.Services.FileUpload;
 import com.ecom.Services.ProductService;
 import com.ecom.payload.AppConstants;
 import com.ecom.payload.ProductDto;
 import com.ecom.payload.ProductResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
 @RequestMapping("/product")
 public class ProductController {
-	
+
 	@Autowired
 	private ProductService productService;
-	private List<Product> findProductByCategoty;
-	
+	private List<Product> findProductByCategory;
+
+	@Autowired
+	private FileUpload fileUpload;
+
+	@Value("${product.path.images}")
+	private String imagePath;
+
+	@PostMapping("/images/{productId}")
+	 public ResponseEntity<?> uploadImageOfProduct(@PathVariable int productId
+		, @RequestParam("product_image")MultipartFile file){
+		ProductDto productDto = this.productService.viewProductById(productId);
+		String imageName = null;
+		try {
+			String uploadImage = this.fileUpload.uploadImage(imagePath, file);
+			productDto.setImageName(uploadImage);
+			System.out.println(productDto.getImageName());
+			ProductDto updatedProduct = this.productService.updateProduct(productId, productDto);
+			System.out.println(updatedProduct.getImageName());
+			return new ResponseEntity<>(updatedProduct,HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(Map.of("Message", "File not Upload in server"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	@PostMapping("/create/{catid}")
 	//product/create
 	public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto product,@PathVariable int catid) {

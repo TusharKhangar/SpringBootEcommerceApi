@@ -31,8 +31,8 @@ public class  UserService {
 	
 	public UserDto create(UserDto userDto) {
 		  User user=this.toEntity(userDto);
-		        String passEncode = this.passwordEncoder.encode(user.getPassword());
-		        user.setPassword(passEncode);
+		  String passEncode = this.passwordEncoder.encode(user.getPassword());
+		  user.setPassword(passEncode);
 		  User userCreate=this.userRepositroy.save(user);
 		return this.toDto(userCreate);
 	}
@@ -76,8 +76,12 @@ public class  UserService {
 
 
 	public UserDto getByEmailId(String emailId) {
-		       User findemail=userRepositroy.findByEmail(emailId).orElseThrow(() -> new ResourceNotFoundException("User Email Is is Not Exit"+emailId));
+		       User findemail=userRepositroy.findByEmail(emailId).orElseThrow(() -> new ResourceNotFoundException("User Email does not exist "+emailId));
 		return this.toDto(findemail);
+	}
+
+	public boolean userExist(UserDto userDto) {
+		return userRepositroy.existsUserByEmail(userDto.getEmail());
 	}
 	@Autowired
 	private ModelMapper mapper;

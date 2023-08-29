@@ -93,7 +93,7 @@ public class ProductService {
 	
 	public ProductDto updateProduct(int pid,ProductDto newp) {
            Product oldp= productRepo.findById(pid).orElseThrow(()->new ResourceNotFoundException(+pid+"product Not found"));
-          oldp.setImageName(newp.getProductName());
+          oldp.setImageName(newp.getImageName());
           oldp.setLive(newp.isLive());
           oldp.setStock(newp.isStock());
           oldp.setProductPrize(newp.getProductPrize());

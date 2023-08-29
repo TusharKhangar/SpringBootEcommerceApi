@@ -3,8 +3,8 @@ package com.ecom.payload;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 import com.ecom.Model.CartItem;
 

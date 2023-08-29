@@ -27,7 +27,7 @@ public class EcomBackendApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-//		 System.out.println(this.passwordEncoder.encode("ch123"));
+		 System.out.println(this.passwordEncoder.encode("dishu"));
 //		 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 //			Date date=new Date();
 //			formatter.format(date);

@@ -11,6 +11,8 @@ import com.ecom.Model.User;
 public interface UserRepository extends JpaRepository<User,Integer>{
 	
 	public Optional<User>findByEmail(String email);
+
+    public boolean existsUserByEmail(String email);
 	 public   List<User>findByName(String name);
 	  public User findByEmailAndPassword(String email,String name);
 	   public   List<User>findByActiveTrue();

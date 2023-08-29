@@ -1,7 +1,6 @@
 package com.ecom.payload;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+
 
 import com.ecom.Model.Category;
 
